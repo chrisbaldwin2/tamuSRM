@@ -73,7 +73,7 @@ link2.addInterface(sw1_iface2)
 # m1.addService(pg.Execute(shell="sh", command="/local/repository/daemon.sh"))
 # m2.addService(pg.Execute(shell="sh", command="/local/repository/bd.sh"))
 
-print('\n~~~~~~~~~~~Starting Commands~~~~~~~~~~~')
+# print('\n~~~~~~~~~~~Starting Commands~~~~~~~~~~~')
 m1.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
 m2.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
 
