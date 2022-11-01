@@ -56,5 +56,8 @@ link1.addInterface(m2_iface)
 # m1.addService(pg.Execute(shell="sh", command="/local/repository/daemon.sh"))
 # m2.addService(pg.Execute(shell="sh", command="/local/repository/bd.sh"))
 
+m1.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
+m2.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
+
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
