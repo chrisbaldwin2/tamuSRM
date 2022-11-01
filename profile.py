@@ -17,11 +17,40 @@ pc = portal.Context()
 # Create a Request object to start building the RSpec.
 request = pc.makeRequestRSpec()
  
+pc.defineParameter("phystype1", "Switch 1 type",
+                   portal.ParameterType.STRING, "mlnx-sn2410",
+                   [('mlnx-sn2410', 'Mellanox SN2410'),
+                    ('dell-s4048',  'Dell S4048')])
+
+params = pc.bindParameters()
+
 # Add a raw PC to the request.
-node = request.RawPC("node")
+m1 = request.RawPC("M1")
+m1_iface = m1.addInterface()
+# M1:192.168.0.11, M2:192.168.0.12
+m1_iface.addAddress(pg.IPv4Address("192.168.0.11", "255.255.255.0"))
+
+m2 = request.RawPC("M2")
+m2_iface = m2.addInterface()
+# M1:192.168.0.11, M2:192.168.0.12
+m2_iface.addAddress(pg.IPv4Address("192.168.0.12", "255.255.255.0"))
+
+mysw1 = request.Switch("mysw1")
+mysw1.hardware_type = params.phystype1
+sw1iface1 = mysw1.addInterface()
+sw1iface2 = mysw1.addInterface()
+
+link1 = request.L1Link("link1")
+link1.addInterface(m1_iface)
+link1.addInterface(sw1iface1)
+
+link2 = request.L1Link("link2")
+link2.addInterface(m2_iface)
+link2.addInterface(sw1iface2)
 
 # Install and execute a script that is contained in the repository.
-node.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
+# m1.addService(pg.Execute(shell="sh", command="/local/repository/daemon.sh"))
+# m2.addService(pg.Execute(shell="sh", command="/local/repository/bd.sh"))
 
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
