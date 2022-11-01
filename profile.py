@@ -35,7 +35,7 @@ m2_iface = m2.addInterface()
 # M1:192.168.0.11, M2:192.168.0.12
 m2_iface.addAddress(pg.IPv4Address("192.168.0.12", "255.255.255.0"))
 
-link1 = request.L1Link("link1")
+link1 = request.Link("link1")
 link1.addInterface(m1_iface)
 link1.addInterface(m2_iface)
 
