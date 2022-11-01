@@ -19,22 +19,37 @@ pc = portal.Context()
 # Create a Request object to start building the RSpec.
 request = pc.makeRequestRSpec()
  
-pc.defineParameter("phystype1", "Switch 1 type",
+pc.defineParameter("switch_type", "Switch 1 type",
                    portal.ParameterType.STRING, "mlnx-sn2410",
                    [('mlnx-sn2410', 'Mellanox SN2410'),
                     ('dell-s4048',  'Dell S4048')])
+
+pc.defineParameter("node_type",
+                   "Physical node type (m400, m510, xl170, d6515)",
+                   portal.ParameterType.STRING, "m510",
+                   [('m400',  '8 core 64-bit ARMv8; 64 GB Mem; 10 GB Mellanox'),
+                    ('m510',  '8 core 64-bit x86; 64 GB Mem; 10 GB Mellanox'),
+                    ('xl170', '10 core 64-bit x86; 64 GB Mem; 25 GB Mellanox'),
+                    ('d6515', '32 core 64-bit x86; 128 GB Mem; 100 GB Mellanox')]
+                   )
+
+portal.context.defineParameter( "n", "Number of Remote Nodes", portal.ParameterType.INTEGER, 1 )
 
 params = pc.bindParameters()
 
 # Add a raw PC to the request.
 m1 = request.RawPC("M1")
+if params.node_type != "":
+    m1.hardware_type = params.node_type
 m1_iface = m1.addInterface()
-# M1:192.168.0.11, M2:192.168.0.12
+# M1:192.168.0.11
 m1_iface.addAddress(pg.IPv4Address("192.168.0.11", "255.255.255.0"))
 
 m2 = request.RawPC("M2")
+if params.node_type != "":
+    m2.hardware_type = params.node_type
 m2_iface = m2.addInterface()
-# M1:192.168.0.11, M2:192.168.0.12
+# M2:192.168.0.12
 m2_iface.addAddress(pg.IPv4Address("192.168.0.12", "255.255.255.0"))
 
 # link1 = request.Link("link1")
@@ -42,7 +57,7 @@ m2_iface.addAddress(pg.IPv4Address("192.168.0.12", "255.255.255.0"))
 # link1.addInterface(m2_iface)
 
 sw1 = request.Switch("Sw1")
-sw1.hardware_type = params.phystype1
+sw1.hardware_type = params.switch_type
 sw1_iface1 = sw1.addInterface()
 sw1_iface2 = sw1.addInterface()
 
@@ -58,6 +73,7 @@ link2.addInterface(sw1_iface2)
 # m1.addService(pg.Execute(shell="sh", command="/local/repository/daemon.sh"))
 # m2.addService(pg.Execute(shell="sh", command="/local/repository/bd.sh"))
 
+print('\n~~~~~~~~~~~Starting Commands~~~~~~~~~~~')
 m1.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
 m2.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
 
