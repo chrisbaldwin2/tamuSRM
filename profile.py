@@ -33,7 +33,7 @@ pc.defineParameter("node_type",
                     ('d6515', '32 core 64-bit x86; 128 GB Mem; 100 GB Mellanox')]
                    )
 
-portal.context.defineParameter( "n", "Number of Remote Nodes", portal.ParameterType.INTEGER, 1 )
+pc.defineParameter( "n", "Number of Remote Nodes", portal.ParameterType.INTEGER, 1 )
 
 params = pc.bindParameters()
 
