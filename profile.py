@@ -37,22 +37,22 @@ m2_iface = m2.addInterface()
 # M1:192.168.0.11, M2:192.168.0.12
 m2_iface.addAddress(pg.IPv4Address("192.168.0.12", "255.255.255.0"))
 
-link1 = request.Link("link1")
-link1.addInterface(m1_iface)
-link1.addInterface(m2_iface)
-
-# sw1 = request.Switch("Sw1")
-# sw1.hardware_type = params.phystype1
-# sw1_iface1 = sw1.addInterface()
-# sw1_iface2 = sw1.addInterface()
-
-# link1 = request.L1Link("link1")
+# link1 = request.Link("link1")
 # link1.addInterface(m1_iface)
-# link1.addInterface(sw1_iface1)
+# link1.addInterface(m2_iface)
 
-# link2 = request.L1Link("link2")
-# link2.addInterface(m2_iface)
-# link2.addInterface(sw1_iface2)
+sw1 = request.Switch("Sw1")
+sw1.hardware_type = params.phystype1
+sw1_iface1 = sw1.addInterface()
+sw1_iface2 = sw1.addInterface()
+
+link1 = request.L1Link("link1")
+link1.addInterface(m1_iface)
+link1.addInterface(sw1_iface1)
+
+link2 = request.L1Link("link2")
+link2.addInterface(m2_iface)
+link2.addInterface(sw1_iface2)
 
 # Install and execute a script that is contained in the repository.
 # m1.addService(pg.Execute(shell="sh", command="/local/repository/daemon.sh"))
