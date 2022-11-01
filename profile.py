@@ -10,6 +10,8 @@ Wait for the profile instance to start, then click on the node in the topology a
 import geni.portal as portal
 # Import the ProtoGENI library.
 import geni.rspec.pg as pg
+# Import the Emulab specific extensions.
+import geni.rspec.emulab as emulab
 
 # Create a portal context.
 pc = portal.Context()
