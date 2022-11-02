@@ -41,16 +41,18 @@ params = pc.bindParameters()
 m1 = request.RawPC("M1")
 if params.node_type != "":
     m1.hardware_type = params.node_type
+    pass
 m1_iface = m1.addInterface()
 # M1:192.168.0.11
-m1_iface.addAddress(pg.IPv4Address("192.168.0.11", "255.255.255.0"))
+m1_iface.addAddress(pg.IPv4Address("192.168.1.11", "255.255.255.0"))
 
 m2 = request.RawPC("M2")
 if params.node_type != "":
     m2.hardware_type = params.node_type
+    pass
 m2_iface = m2.addInterface()
 # M2:192.168.0.12
-m2_iface.addAddress(pg.IPv4Address("192.168.0.12", "255.255.255.0"))
+m2_iface.addAddress(pg.IPv4Address("192.168.1.12", "255.255.255.0"))
 
 # link1 = request.Link("link1")
 # link1.addInterface(m1_iface)
@@ -61,11 +63,11 @@ sw1.hardware_type = params.switch_type
 sw1_iface1 = sw1.addInterface()
 sw1_iface2 = sw1.addInterface()
 
-link1 = request.L1Link("link1")
+link1 = request.Link("link1")
 link1.addInterface(m1_iface)
 link1.addInterface(sw1_iface1)
 
-link2 = request.L1Link("link2")
+link2 = request.Link("link2")
 link2.addInterface(m2_iface)
 link2.addInterface(sw1_iface2)
 

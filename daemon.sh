@@ -25,8 +25,8 @@ cd $REPO_DIR/setup
 
 if [ $# -eq 0 ]
   then
-    echo "No arguments supplied; default 192.168.0.11"
-    sudo ./ib_setup.sh 192.168.0.11
+    echo "No arguments supplied; default 192.168.1.11"
+    sudo ./ib_setup.sh 192.168.1.11
   else
     echo "Setup with $1"
     sudo ./ib_setup.sh $1
