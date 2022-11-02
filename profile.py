@@ -27,10 +27,10 @@ pc.defineParameter("switch_type", "Switch 1 type",
 pc.defineParameter("node_type",
                    "Physical node type (m400, m510, xl170, d6515)",
                    portal.ParameterType.STRING, "m510",
-                   [('m400',  '8 core 64-bit ARMv8; 64 GB Mem; 10 GB Mellanox'),
-                    ('m510',  '8 core 64-bit x86; 64 GB Mem; 10 GB Mellanox'),
-                    ('xl170', '10 core 64-bit x86; 64 GB Mem; 25 GB Mellanox'),
-                    ('d6515', '32 core 64-bit x86; 128 GB Mem; 100 GB Mellanox')]
+                   [('m400',  'm400:: 8 core 64-bit ARMv8; 64 GB Mem; 10 GB Mellanox'),
+                    ('m510',  'm510:: 8 core 64-bit x86; 64 GB Mem; 10 GB Mellanox'),
+                    ('xl170', 'xl170:: 10 core 64-bit x86; 64 GB Mem; 25 GB Mellanox'),
+                    ('d6515', 'd6515:: 32 core 64-bit x86; 128 GB Mem; 100 GB Mellanox')]
                    )
 
 pc.defineParameter( "n", "Number of Remote Nodes", portal.ParameterType.INTEGER, 1 )
@@ -59,6 +59,7 @@ m2_iface.addAddress(pg.IPv4Address("192.168.1.12", "255.255.255.0"))
 # link1.addInterface(m2_iface)
 
 sw1 = request.Switch("Sw1")
+sw1.addAddress(pg.IPv4Address("192.168.1.10", "255.255.255.0"))
 sw1.hardware_type = params.switch_type
 sw1_iface1 = sw1.addInterface()
 sw1_iface2 = sw1.addInterface()
