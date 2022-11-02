@@ -59,10 +59,11 @@ m2_iface.addAddress(pg.IPv4Address("192.168.1.12", "255.255.255.0"))
 # link1.addInterface(m2_iface)
 
 sw1 = request.Switch("Sw1")
-sw1.addAddress(pg.IPv4Address("192.168.1.10", "255.255.255.0"))
 sw1.hardware_type = params.switch_type
 sw1_iface1 = sw1.addInterface()
+sw1_iface1.addAddress(pg.IPv4Address("192.168.1.10", "255.255.255.0"))
 sw1_iface2 = sw1.addInterface()
+sw1_iface2.addAddress(pg.IPv4Address("192.168.1.9", "255.255.255.0"))
 
 link1 = request.Link("link1")
 link1.addInterface(m1_iface)
