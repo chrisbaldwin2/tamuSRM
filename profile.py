@@ -20,14 +20,17 @@ pc = portal.Context()
 request = pc.makeRequestRSpec()
  
 pc.defineParameter("switch_type", "Switch 1 type",
-                   portal.ParameterType.STRING, "mlnx-sn2410",
+                   portal.ParameterType.STRING, "none",
                    [('mlnx-sn2410', 'Mellanox SN2410'),
+                    ('none', 'apt-none'),
                     ('dell-s4048',  'Dell S4048')])
 
 pc.defineParameter("node_type",
-                   "Physical node type (m400, m510, xl170, d6515)",
-                   portal.ParameterType.STRING, "m510",
+                   "Physical node type (m400, c6220, m510, xl170, d6515)",
+                   portal.ParameterType.STRING, "c6220",
                    [('m400',  'm400:: 8 core 64-bit ARMv8; 64 GB Mem; 10 GB Mellanox'),
+                    ('c6220', 'c6220:: 16 core 64-bit x86; 64 GB Mem; 10 GB Mellanox'),
+                    ('r320',  'r320:: 8 core 64-bit x86; 16 GB Mem; 10 GB Mellanox'),
                     ('m510',  'm510:: 8 core 64-bit x86; 64 GB Mem; 10 GB Mellanox'),
                     ('xl170', 'xl170:: 10 core 64-bit x86; 64 GB Mem; 25 GB Mellanox'),
                     ('d6515', 'd6515:: 32 core 64-bit x86; 128 GB Mem; 100 GB Mellanox')]
@@ -54,24 +57,28 @@ m2_iface = m2.addInterface()
 # M2:192.168.0.12
 m2_iface.addAddress(pg.IPv4Address("192.168.1.12", "255.255.255.0"))
 
-# link1 = request.Link("link1")
-# link1.addInterface(m1_iface)
-# link1.addInterface(m2_iface)
+if params.switch_type == 'none':
 
-sw1 = request.Switch("Sw1")
-sw1.hardware_type = params.switch_type
-sw1_iface1 = sw1.addInterface()
-sw1_iface1.addAddress(pg.IPv4Address("192.168.1.10", "255.255.255.0"))
-sw1_iface2 = sw1.addInterface()
-sw1_iface2.addAddress(pg.IPv4Address("192.168.1.9", "255.255.255.0"))
+    link1 = request.Link("link1")
+    link1.addInterface(m1_iface)
+    link1.addInterface(m2_iface)
+    pass
+else:
+    sw1 = request.Switch("Sw1")
+    sw1.hardware_type = params.switch_type
+    sw1_iface1 = sw1.addInterface()
+    sw1_iface1.addAddress(pg.IPv4Address("192.168.1.10", "255.255.255.0"))
+    sw1_iface2 = sw1.addInterface()
+    sw1_iface2.addAddress(pg.IPv4Address("192.168.1.9", "255.255.255.0"))
 
-link1 = request.L1Link("link1")
-link1.addInterface(m1_iface)
-link1.addInterface(sw1_iface1)
+    link1 = request.Link("link1")
+    link1.addInterface(m1_iface)
+    link1.addInterface(sw1_iface1)
 
-link2 = request.L1Link("link2")
-link2.addInterface(m2_iface)
-link2.addInterface(sw1_iface2)
+    link2 = request.Link("link2")
+    link2.addInterface(m2_iface)
+    link2.addInterface(sw1_iface2)
+    pass
 
 # Install and execute a script that is contained in the repository.
 # m1.addService(pg.Execute(shell="sh", command="/local/repository/daemon.sh"))
