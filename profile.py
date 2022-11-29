@@ -65,11 +65,11 @@ sw1_iface1.addAddress(pg.IPv4Address("192.168.1.10", "255.255.255.0"))
 sw1_iface2 = sw1.addInterface()
 sw1_iface2.addAddress(pg.IPv4Address("192.168.1.9", "255.255.255.0"))
 
-link1 = request.Link("link1")
+link1 = request.L1Link("link1")
 link1.addInterface(m1_iface)
 link1.addInterface(sw1_iface1)
 
-link2 = request.Link("link2")
+link2 = request.L1Link("link2")
 link2.addInterface(m2_iface)
 link2.addInterface(sw1_iface2)
 
