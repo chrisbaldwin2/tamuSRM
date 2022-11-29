@@ -78,8 +78,8 @@ link2.addInterface(sw1_iface2)
 # m2.addService(pg.Execute(shell="sh", command="/local/repository/bd.sh"))
 
 # print('\n~~~~~~~~~~~Starting Commands~~~~~~~~~~~')
-m1.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
-m2.addService(pg.Execute(shell="sh", command="/local/repository/silly.sh"))
+m1.addService(pg.Execute(shell="sh", command="chmod +x /local/repository ; /local/repository/silly.sh"))
+m2.addService(pg.Execute(shell="sh", command="chmod +x /local/repository ; /local/repository/silly.sh"))
 
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
