@@ -44,7 +44,7 @@ if params.node_type != "":
     pass
 m1_iface = m1.addInterface()
 # M1:192.168.0.11
-m1_iface.addAddress(pg.IPv4Address("192.168.1.11"))
+m1_iface.addAddress(pg.IPv4Address("192.168.1.11", "255.255.255.0"))
 
 m2 = request.RawPC("M2")
 if params.node_type != "":
@@ -52,7 +52,7 @@ if params.node_type != "":
     pass
 m2_iface = m2.addInterface()
 # M2:192.168.0.12
-m2_iface.addAddress(pg.IPv4Address("192.168.1.12"))
+m2_iface.addAddress(pg.IPv4Address("192.168.1.12", "255.255.255.0"))
 
 # link1 = request.Link("link1")
 # link1.addInterface(m1_iface)
