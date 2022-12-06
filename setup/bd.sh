@@ -19,14 +19,14 @@ sudo ./ib_setup.sh 192.168.0.<11, 12>
 ./install.sh bd
 """
 
-REPO_DIR = $(dirname -- $(readlink -f "${BASH_SOURCE}"))
+REPO_DIR = "$(dirname -- $(readlink -f "${BASH_SOURCE}"))"
 
 cd $REPO_DIR/setup
 
 if [ $# -eq 0 ]
   then
-    echo "No arguments supplied; default 192.168.1.11"
-    sudo ./ib_setup.sh 192.168.1.11
+    echo "No arguments supplied; default 192.168.1.12"
+    sudo ./ib_setup.sh 192.168.1.12
   else
     echo "Setup with $1"
     sudo ./ib_setup.sh $1

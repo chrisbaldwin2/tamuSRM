@@ -45,6 +45,7 @@ m1 = request.RawPC("M1")
 if params.node_type != "":
     m1.hardware_type = params.node_type
     pass
+m1.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"
 m1_iface = m1.addInterface()
 # M1:192.168.0.11
 m1_iface.addAddress(pg.IPv4Address("192.168.1.11", "255.255.255.0"))
@@ -53,6 +54,7 @@ m2 = request.RawPC("M2")
 if params.node_type != "":
     m2.hardware_type = params.node_type
     pass
+m2.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU18-64-STD"
 m2_iface = m2.addInterface()
 # M2:192.168.0.12
 m2_iface.addAddress(pg.IPv4Address("192.168.1.12", "255.255.255.0"))

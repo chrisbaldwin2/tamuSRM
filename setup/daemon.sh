@@ -19,7 +19,7 @@ sudo ./ib_setup.sh 192.168.0.<11, 12>
 ./install.sh bd
 """
 
-REPO_DIR = $(dirname -- $(readlink -f "${BASH_SOURCE}"))
+REPO_DIR = "$(dirname -- $(readlink -f "${BASH_SOURCE}"))"
 
 cd $REPO_DIR/setup
 
