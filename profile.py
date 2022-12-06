@@ -87,8 +87,8 @@ else:
 # m2.addService(pg.Execute(shell="sh", command="/local/repository/bd.sh"))
 
 # print('\n~~~~~~~~~~~Starting Commands~~~~~~~~~~~')
-m1.addService(pg.Execute(shell="sh", command="cd /local/repository ; chmod -R +x infiniswap_bd infiniswap_daemon setup ; setup/silly.sh"))
-m2.addService(pg.Execute(shell="sh", command="cd /local/repository ; chmod -R +x infiniswap_bd infiniswap_daemon setup ; setup/silly.sh"))
+m1.addService(pg.Execute(shell="sh", command="cd /local/repository && chmod -R +x infiniswap_bd infiniswap_daemon setup && setup/silly.sh"))
+m2.addService(pg.Execute(shell="sh", command="cd /local/repository && chmod -R +x infiniswap_bd infiniswap_daemon setup && setup/silly.sh"))
 
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
