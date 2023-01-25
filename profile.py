@@ -45,19 +45,24 @@ m1 = request.RawPC("M1")
 if params.node_type != "":
     m1.hardware_type = params.node_type
     pass
-m1.disk_image = "urn:publicid:IDN+apt.emulab.net+image+tamusrm-PG0:tamuSRM.BasePreIB"
+m1.disk_image = "urn:publicid:IDN+apt.emulab.net+image+tamusrm-PG0:tamuSRM.postIB"
 m1_iface = m1.addInterface()
 # M1:192.168.0.11
 m1_iface.addAddress(pg.IPv4Address("192.168.1.11", "255.255.255.0"))
+bs = m1.Blockstore("bs", "/dev/sda4" )
+bs.size = "32GB"
 
 m2 = request.RawPC("M2")
 if params.node_type != "":
     m2.hardware_type = params.node_type
     pass
-m2.disk_image = "urn:publicid:IDN+apt.emulab.net+image+tamusrm-PG0:tamuSRM.BasePreIB"
+m2.disk_image = "urn:publicid:IDN+apt.emulab.net+image+tamusrm-PG0:tamuSRM.postIB"
 m2_iface = m2.addInterface()
 # M2:192.168.0.12
 m2_iface.addAddress(pg.IPv4Address("192.168.1.12", "255.255.255.0"))
+bs = m2.Blockstore("bs", "/dev/sda4" )
+bs.size = "32GB"
+
 
 if params.switch_type == 'none':
 
@@ -87,8 +92,8 @@ else:
 # m2.addService(pg.Execute(shell="sh", command="/local/repository/bd.sh"))
 
 # print('\n~~~~~~~~~~~Starting Commands~~~~~~~~~~~')
-m1.addService(pg.Install("http://www.mellanox.com/downloads/ofed/MLNX_OFED-4.9-6.0.6.0/MLNX_OFED_LINUX-4.9-6.0.6.0-ubuntu18.04-x86_64.tgz", path="/local"))
-m2.addService(pg.Install("http://www.mellanox.com/downloads/ofed/MLNX_OFED-4.9-6.0.6.0/MLNX_OFED_LINUX-4.9-6.0.6.0-ubuntu18.04-x86_64.tgz", path="/local"))
+# m1.addService(pg.Install("http://www.mellanox.com/downloads/ofed/MLNX_OFED-4.9-6.0.6.0/MLNX_OFED_LINUX-4.9-6.0.6.0-ubuntu18.04-x86_64.tgz", path="/local"))
+# m2.addService(pg.Install("http://www.mellanox.com/downloads/ofed/MLNX_OFED-4.9-6.0.6.0/MLNX_OFED_LINUX-4.9-6.0.6.0-ubuntu18.04-x86_64.tgz", path="/local"))
 m1.addService(pg.Execute(shell="bash", command="cd /local/repository ; setup/silly.sh"))
 m2.addService(pg.Execute(shell="bash", command="cd /local/repository ; setup/silly.sh"))
 
