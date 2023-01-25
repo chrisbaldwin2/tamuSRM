@@ -49,8 +49,8 @@ m1.disk_image = "urn:publicid:IDN+apt.emulab.net+image+tamusrm-PG0:tamuSRM.postI
 m1_iface = m1.addInterface()
 # M1:192.168.0.11
 m1_iface.addAddress(pg.IPv4Address("192.168.1.11", "255.255.255.0"))
-bs = m1.Blockstore("bs", "/dev/sda4" )
-bs.size = "32GB"
+bs1 = m1.Blockstore("bs1", "/dev/sda4" )
+bs1.size = "32GB"
 
 m2 = request.RawPC("M2")
 if params.node_type != "":
@@ -60,8 +60,8 @@ m2.disk_image = "urn:publicid:IDN+apt.emulab.net+image+tamusrm-PG0:tamuSRM.postI
 m2_iface = m2.addInterface()
 # M2:192.168.0.12
 m2_iface.addAddress(pg.IPv4Address("192.168.1.12", "255.255.255.0"))
-bs = m2.Blockstore("bs", "/dev/sda4" )
-bs.size = "32GB"
+bs2 = m2.Blockstore("bs2", "/dev/sda4" )
+bs2.size = "32GB"
 
 
 if params.switch_type == 'none':
