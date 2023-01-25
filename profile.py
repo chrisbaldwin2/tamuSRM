@@ -87,10 +87,10 @@ else:
 # m2.addService(pg.Execute(shell="sh", command="/local/repository/bd.sh"))
 
 # print('\n~~~~~~~~~~~Starting Commands~~~~~~~~~~~')
-m1.addService(rspec.Install("http://www.mellanox.com/downloads/ofed/MLNX_OFED-5.8-1.1.2.1/MLNX_OFED_LINUX-5.8-1.1.2.1-ubuntu18.04-x86_64.tgz", path="/local"))
-m2.addService(rspec.Install("http://www.mellanox.com/downloads/ofed/MLNX_OFED-5.8-1.1.2.1/MLNX_OFED_LINUX-5.8-1.1.2.1-ubuntu18.04-x86_64.tgz", path="/local"))
-m1.addService(rspec.Execute(shell="sh", command="cd /local/repository ; setup/silly.sh"))
-m2.addService(rspec.Execute(shell="sh", command="cd /local/repository ; setup/silly.sh"))
+m1.addService(pg.Install("http://www.mellanox.com/downloads/ofed/MLNX_OFED-5.8-1.1.2.1/MLNX_OFED_LINUX-5.8-1.1.2.1-ubuntu18.04-x86_64.tgz", path="/local"))
+m2.addService(pg.Install("http://www.mellanox.com/downloads/ofed/MLNX_OFED-5.8-1.1.2.1/MLNX_OFED_LINUX-5.8-1.1.2.1-ubuntu18.04-x86_64.tgz", path="/local"))
+m1.addService(pg.Execute(shell="bash", command="cd /local/repository ; setup/silly.sh"))
+m2.addService(pg.Execute(shell="bash", command="cd /local/repository ; setup/silly.sh"))
 
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
