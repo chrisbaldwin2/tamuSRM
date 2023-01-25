@@ -62,6 +62,7 @@
 #include <linux/cpumask.h>
 #include <linux/configfs.h>
 #include <linux/delay.h>
+#include <linux/bio.h>
 
 #include <linux/moduleparam.h>
 #include <linux/init.h>

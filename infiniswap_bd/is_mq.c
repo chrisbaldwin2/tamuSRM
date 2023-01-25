@@ -87,8 +87,13 @@ static void stackbd_io_fn(struct bio *bio)
 {
 	if (bio == NULL)
         printk("bio is NULL\n");
-
-	bio->bi_bdev = stackbd.bdev_raw;
+	// https://github.com/akiradeveloper/dm-writeboost/commit/d443c87f2f627d19a5f9d3faed2f488bb6364514
+	#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0) 
+		bio_set_dev(bio, stackbd.bdev_raw);
+	#else
+		bio->bi_bdev = stackbd.bdev_raw;
+	#endif
+	
 	trace_block_bio_remap(bdev_get_queue(stackbd.bdev_raw), bio, bio->bi_bdev->bd_dev, 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 14, 0)
 	bio->bi_iter.bi_sector);
@@ -162,7 +167,11 @@ void stackbd_make_request4(struct request_queue *q, struct request *req)
         goto abort;
     }
     for (i=0; i<len -1; i++){
-    	bio = bio_clone(b, GFP_ATOMIC);
+		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0) 
+			bio_clone_blkg_association(bio, b);
+		#else
+    		bio = bio_clone(b, GFP_ATOMIC);
+		#endif
     	bio_list_add(&stackbd.bio_list, bio);
     	b = b->bi_next;
 	}

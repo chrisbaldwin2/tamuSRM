@@ -8,7 +8,7 @@ fi
 # block device options
 #have the kernel patch for lookup_bdev()
 #(HAVE_LOOKUP_BDEV_PATCH), default is undefined
-have_lookup_bdev_patch=0
+have_lookup_bdev_patch=1
 
 #max page number in a single struct request (swap IO request),
 #(MAX_SGL_LEN), default is 1 (<4.4.0), 32 (>=4.4.0)
