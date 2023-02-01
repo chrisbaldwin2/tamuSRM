@@ -188,7 +188,11 @@ void stackbd_bio_generate(struct rdma_ctx *ctx, struct request *req)
 	unsigned int nr_segs = req->nr_phys_segments;
 	unsigned int io_size = nr_segs * IS_PAGE_SIZE;
 
+	#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0) 
+	bio = bio_clone_kmalloc(b, GFP_ATOMIC);
+	#else
 	cloned_bio = bio_clone(req->bio, GFP_ATOMIC); 
+	#endif
 	pg = virt_to_page(ctx->rdma_buf);
 	cloned_bio->bi_io_vec->bv_page  = pg; 
 	cloned_bio->bi_io_vec->bv_len = io_size;

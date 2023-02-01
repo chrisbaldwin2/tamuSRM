@@ -62,7 +62,9 @@
 #include <linux/cpumask.h>
 #include <linux/configfs.h>
 #include <linux/delay.h>
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0)
 #include <linux/bio.h>
+#endif
 
 #include <linux/moduleparam.h>
 #include <linux/init.h>

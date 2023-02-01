@@ -94,13 +94,14 @@ static void stackbd_io_fn(struct bio *bio)
 		bio->bi_bdev = stackbd.bdev_raw;
 	#endif
 	
-	trace_block_bio_remap(bdev_get_queue(stackbd.bdev_raw), bio, bio->bi_bdev->bd_dev, 
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 14, 0)
-	bio->bi_iter.bi_sector);
-#else
-	bio->bi_sector);
-#endif 
-	
+	trace_block_bio_remap(bdev_get_queue(stackbd.bdev_raw), bio, bio->bi_iter->bd_dev, 
+	#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 14, 0)
+	bio->bi_iter.bi_sector
+	#else
+	bio->bi_sector
+	#endif 
+	);
+
 	generic_make_request(bio);
 }
 static int stackbd_threadfn(void *data)
@@ -168,17 +169,21 @@ void stackbd_make_request4(struct request_queue *q, struct request *req)
     }
     for (i=0; i<len -1; i++){
 		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0) 
-			bio_clone_blkg_association(bio, b);
+		bio = bio_clone_fast(b, GFP_ATOMIC, &stackbd.bio_list);
 		#else
-    		bio = bio_clone(b, GFP_ATOMIC);
+		bio = bio_clone(b, GFP_ATOMIC);
+		bio_list_add(&stackbd.bio_list, bio);
 		#endif
-    	bio_list_add(&stackbd.bio_list, bio);
     	b = b->bi_next;
 	}
-    bio = bio_clone(b, GFP_ATOMIC);
+	#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0) 
+	bio = bio_clone_fast(b, GFP_ATOMIC, &stackbd.bio_list);
+	#else
+	bio = bio_clone(b, GFP_ATOMIC);
+	bio_list_add(&stackbd.bio_list, bio);
+	#endif
 	bio->bi_end_io = (bio_end_io_t*)IS_stackbd_end_io2;
 	bio->bi_private = (void*) uint64_from_ptr(req);
-    bio_list_add(&stackbd.bio_list, bio);
 
     wake_up(&req_event);
     spin_unlock_irq(&stackbd.lock);
@@ -208,8 +213,12 @@ void stackbd_make_request3(struct request_queue *q, struct request *req)
         goto abort;
     }
     for (i=0; i<len; i++){
-    	bio = bio_clone(b, GFP_ATOMIC);
-    	bio_list_add(&stackbd.bio_list, bio);
+		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0) 
+			bio = bio_clone_fast(b, GFP_ATOMIC, &stackbd.bio_list);
+		#else
+    		bio = bio_clone(b, GFP_ATOMIC);
+    		bio_list_add(&stackbd.bio_list, bio);
+		#endif
     	b = b->bi_next;
 	}
     wake_up(&req_event);
@@ -240,14 +249,22 @@ void stackbd_make_request2(struct request_queue *q, struct request *req)
         goto abort;
     }
     for (i=0; i<len -1; i++){
-    	bio = bio_clone(b, GFP_ATOMIC);
-    	bio_list_add(&stackbd.bio_list, bio);
+		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0) 
+			bio = bio_clone_fast(b, GFP_ATOMIC, &stackbd.bio_list);
+		#else
+    		bio = bio_clone(b, GFP_ATOMIC);
+    		bio_list_add(&stackbd.bio_list, bio);
+		#endif
     	b = b->bi_next;
 	}
-    bio = bio_clone(b, GFP_ATOMIC);
+	#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0) 
+		bio = bio_clone_fast(b, GFP_ATOMIC, &stackbd.bio_list);
+	#else
+		bio = bio_clone(b, GFP_ATOMIC);
+		bio_list_add(&stackbd.bio_list, bio);
+	#endif
 	bio->bi_end_io = (bio_end_io_t*)IS_stackbd_end_io;
 	bio->bi_private = (void*) uint64_from_ptr(req);
-    bio_list_add(&stackbd.bio_list, bio);
 
     wake_up(&req_event);
     spin_unlock_irq(&stackbd.lock);
