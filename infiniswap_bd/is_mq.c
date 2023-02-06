@@ -250,7 +250,7 @@ void stackbd_make_request2(struct request_queue *q, struct request *req)
     }
     for (i=0; i<len -1; i++){
 		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,14,0) 
-			bio = bio_clone_fast(b, GFP_ATOMIC);
+			bio = bio_clone_kmalloc(b, GFP_ATOMIC);
 		#else
     		bio = bio_clone(b, GFP_ATOMIC);
 		#endif
@@ -582,14 +582,14 @@ static int IS_queue_rq(struct blk_mq_hw_ctx *hctx, struct request *rq)
 
 	if (unlikely(err)) {
 		rq->errors = -EIO;
-		return -1;
+		return BLK_STS_IOERR;
 	}
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 18, 0)
 	blk_mq_start_request(rq);
 #endif
 
-	return MQ_RQ_IN_FLIGHT;
+	return BLK_STS_OK;
 }
 
 // connect hctx with IS-file, IS-conn, and queue
