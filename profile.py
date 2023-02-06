@@ -26,8 +26,8 @@ pc.defineParameter("switch_type", "Switch 1 type",
                     ('dell-s4048',  'Dell S4048')])
 
 pc.defineParameter("node_type",
-                   "Physical node type (m400, c6220, m510, xl170, d6515)",
-                   portal.ParameterType.STRING, "c6220",
+                   "Physical node type (m400, c6220, r320, m510, xl170, d6515)",
+                   portal.ParameterType.STRING, "r320",
                    [('m400',  'm400:: 8 core 64-bit ARMv8; 64 GB Mem; 10 GB Mellanox'),
                     ('c6220', 'c6220:: 16 core 64-bit x86; 64 GB Mem; 10 GB Mellanox'),
                     ('r320',  'r320:: 8 core 64-bit x86; 16 GB Mem; 10 GB Mellanox'),
