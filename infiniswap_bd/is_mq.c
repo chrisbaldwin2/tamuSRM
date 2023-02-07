@@ -583,7 +583,9 @@ static int IS_queue_rq(struct blk_mq_hw_ctx *hctx, struct request *rq)
 	err = IS_request(rq, IS_q);
 
 	if (unlikely(err)) {
+		#if LINUX_VERSION_CODE <= KERNEL_VERSION(4, 13, 0)
 		rq->errors = -EIO;
+		#endif
 		return BLK_STS_IOERR;
 	}
 
