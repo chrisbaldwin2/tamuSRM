@@ -88,14 +88,14 @@ else:
     pass
 
 # Install and execute a script that is contained in the repository.
-# m1.addService(pg.Execute(shell="sh", command="/local/repository/daemon.sh"))
-# m2.addService(pg.Execute(shell="sh", command="/local/repository/bd.sh"))
+# m1.addService(pg.Execute(shell="bash", command="cd /local/repository/setup ; chmod +x *.sh ; ./install.sh bd"))
+# m1.addService(pg.Execute(shell="bash", command="cd /local/repository/setup ; chmod +x *.sh ; ./install.sh daemon"))
 
 # print('\n~~~~~~~~~~~Starting Commands~~~~~~~~~~~')
 # m1.addService(pg.Install("http://www.mellanox.com/downloads/ofed/MLNX_OFED-4.9-6.0.6.0/MLNX_OFED_LINUX-4.9-6.0.6.0-ubuntu18.04-x86_64.tgz", path="/local"))
 # m2.addService(pg.Install("http://www.mellanox.com/downloads/ofed/MLNX_OFED-4.9-6.0.6.0/MLNX_OFED_LINUX-4.9-6.0.6.0-ubuntu18.04-x86_64.tgz", path="/local"))
-m1.addService(pg.Execute(shell="bash", command="cd /local/repository/setup ; chmod +x *.sh ; setup/silly.sh"))
-m2.addService(pg.Execute(shell="bash", command="cd /local/repository/setup ; chmod +x *.sh ; setup/silly.sh"))
+m1.addService(pg.Execute(shell="bash", command="cd /local/repository/setup ; chmod +x *.sh ; ./silly.sh"))
+m2.addService(pg.Execute(shell="bash", command="cd /local/repository/setup ; chmod +x *.sh ; ./silly.sh"))
 
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
