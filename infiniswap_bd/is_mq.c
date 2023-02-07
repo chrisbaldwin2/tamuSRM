@@ -567,6 +567,8 @@ static int IS_request(struct request *req, struct IS_queue *xq)
 static int IS_queue_rq(struct blk_mq_hw_ctx *hctx, const struct blk_mq_queue_data *bd)
 #elif LINUX_VERSION_CODE == KERNEL_VERSION(3, 18, 0)
 static int IS_queue_rq(struct blk_mq_hw_ctx *hctx, struct request *rq, bool last)
+#elif LINUX_VERSION_CODE >= KERNEL_VERSION(4, 13, 0)
+static blk_status_t IS_queue_rq(struct blk_mq_hw_ctx *hctx, struct request *rq)
 #else
 static int IS_queue_rq(struct blk_mq_hw_ctx *hctx, struct request *rq)
 #endif
