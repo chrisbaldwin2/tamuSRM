@@ -111,8 +111,8 @@ fi
 
 if test "$MLNX_OFED_IB_UBUNTU_INSTALLED" = "true"; then
 OFED_VERS=`dpkg -s mlnx-ofed-kernel-dkms | awk -F\- '/Version/ {print $1}' | awk '{print $2}'`
-OFED_CFLAGS=`echo -I/var/lib/dkms/mlnx-ofed-kernel/$OFED_VERS/source/include -include /var/lib/dkms/mlnx-ofed-kernel/$OFED_VERS/source/include/linux/compat-2.6.h`
-RDMA_SYMVERS=`echo $RDMA_SYMVERS /var/lib/dkms/mlnx-ofed-kernel/$OFED_VERS/source/Module.symvers`
+OFED_CFLAGS=`echo -I/var/lib/dkms/mlnx-ofed-kernel/$OFED_VERS/build/include -include /var/lib/dkms/mlnx-ofed-kernel/$OFED_VERS/build/include/linux/compat-2.6.h`
+RDMA_SYMVERS=`echo $RDMA_SYMVERS /var/lib/dkms/mlnx-ofed-kernel/$OFED_VERS/build/Module.symvers`
 fi
 
 if test "$MLNX_OFED_IB_RH_INSTALLED" = "true"; then
